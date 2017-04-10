@@ -1,0 +1,10 @@
+[Unit]
+Description=Flic button service
+Requires=flic-mqtt.service
+Before=flic-mqtt.service
+
+[Service]
+ExecStart=/srv/flic/flicd -f /srv/flic/flic.sqlite3
+
+[Install]
+WantedBy=multi-user.target

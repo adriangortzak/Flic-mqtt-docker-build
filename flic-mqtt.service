@@ -1,0 +1,10 @@
+[Unit]
+Description=Flic MQTT bridge service
+Requires=flicd.service
+After=flicd.service
+
+[Service]
+ExecStart=/usr/bin/python3 /srv/flic/flic_mqtt_service.py mqtt.example.com 1883 mqttusername mqttpassword triggers/flic/
+
+[Install]
+WantedBy=multi-user.target
