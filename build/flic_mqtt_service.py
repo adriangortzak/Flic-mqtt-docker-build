@@ -17,7 +17,7 @@ client = fliclib.FlicClient("localhost")
 
 def got_button(bd_addr):
     cc = fliclib.ButtonConnectionChannel(bd_addr)
-    cc.on_button_up_or_down = \
+    cc.on_button_single_or_double_click_or_hold = \
         lambda channel, click_type, was_queued, time_diff: \
             my_publish(start_topic+channel.bd_addr.replace(":",""),str(click_type).replace("ClickType.",""))
     cc.on_connection_status_changed = \
@@ -29,11 +29,6 @@ def got_info(items):
     print(items)
     for bd_addr in items["bd_addr_of_verified_buttons"]:
         got_button(bd_addr)
-
-
-def on_message(client, userdata, msg):
-    print(client)
-
 
 def my_publish(topic, message):
     publish.single(topic, payload=message, qos=0, retain=False, hostname=mqtt_host, port=mqtt_port, client_id="flic", keepalive=60, will=None, auth= {'username':mqtt_username, 'password':mqtt_password}, tls=None, protocol=mqtt.MQTTv31)
